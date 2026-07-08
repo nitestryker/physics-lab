@@ -8,6 +8,8 @@ extends RigidBody2D
 signal spawned
 signal despawned
 
+const FLAMMABLE_SCRIPT := preload("res://Scripts/Components/Flammable.gd")
+
 ## Data-driven material — never hard-code friction/bounce/mass on objects.
 @export var object_material: ObjectMaterial:
 	set(value):
@@ -25,6 +27,12 @@ func _ready() -> void:
 	contact_monitor = true
 	max_contacts_reported = 8
 	_apply_material()
+	# Flammability is data-driven: a burnable material means this object
+	# can catch fire, with no per-scene setup (see Flammable component).
+	if object_material and object_material.burnable and get_node_or_null(^"Flammable") == null:
+		var flammable := FLAMMABLE_SCRIPT.new()
+		flammable.name = "Flammable"
+		add_child(flammable)
 	spawned.emit()
 
 func _apply_material() -> void:

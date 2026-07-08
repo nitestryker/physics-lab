@@ -17,6 +17,7 @@ const SCENES := {
 	"Wheel": preload("res://Scenes/Objects/Wheel.tscn"),
 	"Motor": preload("res://Scenes/Joints/Motor.tscn"),
 	"Car": preload("res://Scenes/Objects/Car.tscn"),
+	"Ember": preload("res://Scenes/Objects/Ember.tscn"),
 }
 
 ## Where quick-spawned objects drop from (a Marker2D in the world).

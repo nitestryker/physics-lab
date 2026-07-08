@@ -106,6 +106,10 @@ text = "Motor"
 unique_name_in_owner = true
 text = "Car"
 
+[node name="SpawnEmberButton" type="Button" parent="Panel/Margin/VBox/SpawnRow3"]
+unique_name_in_owner = true
+text = "Ember"
+
 [node name="ToolLabel" type="Label" parent="Panel/Margin/VBox"]
 unique_name_in_owner = true
 text = "Click to place: Box"

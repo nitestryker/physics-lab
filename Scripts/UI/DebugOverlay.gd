@@ -33,6 +33,7 @@ func _ready() -> void:
 	%SpawnWheelButton.pressed.connect(_quick_spawn.bind("Wheel"))
 	%SpawnMotorButton.pressed.connect(_quick_spawn.bind("Motor"))
 	%SpawnCarButton.pressed.connect(_quick_spawn.bind("Car"))
+	%SpawnEmberButton.pressed.connect(_quick_spawn.bind("Ember"))
 	GameManager.selected_changed.connect(_on_selected_changed)
 	_on_selected_changed(GameManager.selected_type)
 

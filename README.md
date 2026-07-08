@@ -68,3 +68,6 @@ has no built-in runtime toggle for this.
 - [ ] Grab a spring's ball, pull it down, and release
 - [ ] Spawn a Car, drive it up the ramp with A/D
 - [ ] Spawn a Motor next to a box stack and watch the blade clear it
+- [ ] Throw a box hard at a wall — it now shatters into fragments
+- [ ] Drop an Ember on a box stack and watch fire spread, char, and break them
+- [ ] Touch an Ember to a ragdoll (flesh burns but chars out — no Health yet)
