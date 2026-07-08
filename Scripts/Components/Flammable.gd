@@ -104,7 +104,7 @@ func _body_radius() -> float:
 		if child is CollisionShape2D and child.shape:
 			var s: Shape2D = child.shape
 			if s is CircleShape2D:
-				return s.radius
+				return (s as CircleShape2D).radius
 			if s is RectangleShape2D:
-				return s.size.length() * 0.3
+				return (s as RectangleShape2D).size.length() * 0.3
 	return 12.0

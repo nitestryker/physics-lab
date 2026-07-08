@@ -45,23 +45,25 @@ func _spawn_fragments(parent: PhysicsObject) -> void:
 	var was_burning := flammable != null and flammable.burning
 	var s: Shape2D = cs.shape
 	if s is RectangleShape2D:
-		var frag_size: Vector2 = s.size * 0.46
+		var rect: RectangleShape2D = s
+		var frag_size: Vector2 = rect.size * 0.46
 		if maxf(frag_size.x, frag_size.y) < min_fragment_extent:
 			return
 		# Thin shapes (beams): don't let a dimension collapse to a sliver.
-		frag_size.x = clampf(frag_size.x, minf(min_fragment_extent, s.size.x * 0.9), s.size.x)
-		frag_size.y = clampf(frag_size.y, minf(min_fragment_extent, s.size.y * 0.9), s.size.y)
-		var q := s.size / 4.0
+		frag_size.x = clampf(frag_size.x, minf(min_fragment_extent, rect.size.x * 0.9), rect.size.x)
+		frag_size.y = clampf(frag_size.y, minf(min_fragment_extent, rect.size.y * 0.9), rect.size.y)
+		var q: Vector2 = rect.size / 4.0
 		for offset: Vector2 in [Vector2(-q.x, -q.y), Vector2(q.x, -q.y), Vector2(-q.x, q.y), Vector2(q.x, q.y)]:
 			var shape := RectangleShape2D.new()
 			shape.size = frag_size
 			_make_fragment(parent, shape, offset, was_burning)
 	elif s is CircleShape2D:
-		var frag_radius: float = s.radius * 0.5
+		var circle: CircleShape2D = s
+		var frag_radius: float = circle.radius * 0.5
 		if frag_radius * 2.0 < min_fragment_extent:
 			return
 		for i in 3:
-			var offset := Vector2.RIGHT.rotated(TAU * i / 3.0) * s.radius * 0.5
+			var offset: Vector2 = Vector2.RIGHT.rotated(TAU * i / 3.0) * circle.radius * 0.5
 			var shape := CircleShape2D.new()
 			shape.radius = frag_radius
 			_make_fragment(parent, shape, offset, was_burning)
