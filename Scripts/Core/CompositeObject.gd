@@ -20,8 +20,14 @@ func register_joints() -> void:
 		if child is Joint2D and not child.is_in_group("joints"):
 			child.add_to_group("joints")
 
+var _removed: bool = false
+
 ## Removing any part removes the whole composite (the Grabber delegates
 ## body removal to the scene owner — see Grabber._try_remove).
+## Idempotent: bulk-clear asks once per part (6x for a ragdoll).
 func remove() -> void:
+	if _removed:
+		return
+	_removed = true
 	despawned.emit()
 	queue_free()

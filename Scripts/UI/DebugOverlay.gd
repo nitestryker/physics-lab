@@ -34,6 +34,8 @@ func _ready() -> void:
 	%SpawnMotorButton.pressed.connect(_quick_spawn.bind("Motor"))
 	%SpawnCarButton.pressed.connect(_quick_spawn.bind("Car"))
 	%SpawnEmberButton.pressed.connect(_quick_spawn.bind("Ember"))
+	%DragButton.pressed.connect(func() -> void: GameManager.selected_type = "")
+	%ClearButton.pressed.connect(GameManager.request_clear)
 	GameManager.selected_changed.connect(_on_selected_changed)
 	_on_selected_changed(GameManager.selected_type)
 
@@ -43,11 +45,15 @@ func _process(_delta: float) -> void:
 	joints_label.text = "Joints: %d" % get_tree().get_nodes_in_group("joints").size()
 
 func _quick_spawn(type: String) -> void:
-	GameManager.selected_type = type   # also becomes the click-to-place tool
-	GameManager.request_spawn(type)
+	# Arms the click-to-place tool ONLY — nothing spawns until you
+	# left-click in the world. (Drag Only disarms it again.)
+	GameManager.selected_type = type
 
 func _on_selected_changed(type: String) -> void:
-	tool_label.text = "Click to place: %s" % type
+	if type == "":
+		tool_label.text = "Drag mode: click only grabs"
+	else:
+		tool_label.text = "Click to place: %s" % type
 
 func _on_gravity_changed(value: float) -> void:
 	gravity_label.text = "Gravity: %d" % int(value)

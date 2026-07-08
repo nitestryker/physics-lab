@@ -17,6 +17,8 @@ extends Resource
 @export_group("Gameplay")
 ## Scales max health via the Health component (higher = tougher).
 @export var strength: float = 1.0
+## Blood splatters on hard impacts (auto-adds the Bleeder component).
+@export var bleeds: bool = false
 
 @export_group("Future Systems")
 @export var burnable: bool = false

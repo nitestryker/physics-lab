@@ -10,6 +10,10 @@ extends Node
 @export var damage_factor: float = 0.05
 
 var _body: RigidBody2D
+## Velocity captured BEFORE the physics solver runs each frame —
+## body_entered fires after the solver, when the impact has already
+## drained the velocity (same fix as Bleeder).
+var _pre_step_velocity: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	_body = get_parent() as RigidBody2D
@@ -18,17 +22,21 @@ func _ready() -> void:
 		return
 	_body.body_entered.connect(_on_body_entered)
 
+func _physics_process(_delta: float) -> void:
+	if is_instance_valid(_body):
+		_pre_step_velocity = _body.linear_velocity
+
 func _on_body_entered(other: Node) -> void:
 	if not is_instance_valid(_body):
 		return
 	var health := _body.get_node_or_null(^"Health") as Health
 	if health == null:
 		return
-	var relative_speed: float = _body.linear_velocity.length()
+	var relative_speed: float = _pre_step_velocity.length()
 	var other_mass := 10.0  # static bodies (ground, walls) hit hard
 	if other is RigidBody2D:
-		relative_speed = (_body.linear_velocity - other.linear_velocity).length()
-		other_mass = other.mass
+		relative_speed = (_pre_step_velocity - (other as RigidBody2D).linear_velocity).length()
+		other_mass = (other as RigidBody2D).mass
 	if relative_speed <= speed_threshold:
 		return
 	var amount := (relative_speed - speed_threshold) * damage_factor * other_mass

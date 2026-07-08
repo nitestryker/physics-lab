@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Scripts/Objects/CarController.gd" id="1"]
 [ext_resource type="PackedScene" path="res://Scenes/Base/PhysicsObject.tscn" id="2"]
-[ext_resource type="Resource" path="res://Resources/Materials/Steel.tres" id="3"]
+[ext_resource type="Resource" path="res://Resources/Materials/Wood.tres" id="3"]
 [ext_resource type="Script" path="res://Scripts/Components/Grabbable.gd" id="4"]
 [ext_resource type="PackedScene" path="res://Scenes/Objects/Wheel.tscn" id="5"]
 
@@ -14,7 +14,7 @@ script = ExtResource("1")
 
 [node name="Chassis" parent="." instance=ExtResource("2")]
 object_material = ExtResource("3")
-base_mass = 3.0
+base_mass = 6.0
 
 [node name="CollisionShape2D" parent="Chassis" index="0"]
 shape = SubResource("chassis")

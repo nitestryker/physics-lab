@@ -12,6 +12,9 @@ sandbox. See `PhysicsLab_Project_Overview` (v1.2) for the full plan.
 1. Open Godot → Import → select this folder's `project.godot`.
 2. Press F5. `Scenes/Main/World.tscn` (the Physics Test Room) runs.
 
+Physics runs at 120 ticks/second with continuous collision detection on
+all bodies — required for stable ragdoll piles and thin platforms.
+
 The first time you open the project, Godot will show harmless warnings
 while it generates UID files for scenes and scripts — just save once
 and they go away.
@@ -21,7 +24,7 @@ and they go away.
 | Input | Action |
 |---|---|
 | Left-click on object | Grab and drag (joint-based; release to throw) |
-| Left-click on empty space | Place the selected object type |
+| Left-click on empty space | Place the selected type (nothing in Drag mode) |
 | Right-click on object | Remove it |
 | Middle-mouse drag | Pan camera |
 | Scroll wheel | Zoom |
@@ -30,8 +33,9 @@ and they go away.
 ## Developer Panel
 
 Top-left overlay: FPS, body/joint counts, gravity slider, pause,
-slow motion, and quick-spawn buttons (which also set the
-click-to-place tool). To see collision shapes while testing, use the
+slow motion, and spawn-tool buttons: pick a type, then left-click in
+the world to place it. Drag Only disarms placing. Clear Spawned wipes
+every spawned object, ash pile, and blood stain — the environment stays. To see collision shapes while testing, use the
 editor's **Debug → Visible Collision Shapes** before running — Godot
 has no built-in runtime toggle for this.
 
@@ -70,4 +74,11 @@ has no built-in runtime toggle for this.
 - [ ] Spawn a Motor next to a box stack and watch the blade clear it
 - [ ] Throw a box hard at a wall — it now shatters into fragments
 - [ ] Drop an Ember on a box stack and watch fire spread, char, and break them
-- [ ] Touch an Ember to a ragdoll (flesh burns but chars out — no Health yet)
+- [ ] Touch an Ember to a ragdoll — limbs char, burn to physical ash, and drop off
+- [ ] Drive the Car through an ash pile, then reverse over it fast — wind scatters it
+- [ ] Touch an Ember to the middle of a rope — fire crawls both ways and splits it
+
+Burnable: Wood (Box, Beam), Rubber (Ball, Wheel, car wheels, spring ball), Flesh (ragdoll), Rope. Non-burnable by design: Steel (motor blade), Glass, the environment. The car is wood + rubber and burns completely.
+- [ ] Throw a ragdoll hard at a wall — blood sprays from the limb that hits first
+- [ ] Slam a heavy box into a resting ragdoll — blood stains where it was struck
+- [ ] Watch a fresh stain on a wall: it splashes, runs downward, then dries dark

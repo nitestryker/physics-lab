@@ -59,7 +59,7 @@ text = "Slow Motion"
 [node name="Sep3" type="HSeparator" parent="Panel/Margin/VBox"]
 
 [node name="SpawnLabel" type="Label" parent="Panel/Margin/VBox"]
-text = "Quick Spawn"
+text = "Spawn Tool (click to place)"
 
 [node name="SpawnRow" type="HBoxContainer" parent="Panel/Margin/VBox"]
 theme_override_constants/separation = 6
@@ -110,6 +110,16 @@ text = "Car"
 unique_name_in_owner = true
 text = "Ember"
 
+[node name="DragButton" type="Button" parent="Panel/Margin/VBox"]
+unique_name_in_owner = true
+text = "Drag Only"
+
 [node name="ToolLabel" type="Label" parent="Panel/Margin/VBox"]
 unique_name_in_owner = true
-text = "Click to place: Box"
+text = "Drag mode: click only grabs"
+
+[node name="Sep4" type="HSeparator" parent="Panel/Margin/VBox"]
+
+[node name="ClearButton" type="Button" parent="Panel/Margin/VBox"]
+unique_name_in_owner = true
+text = "Clear Spawned"

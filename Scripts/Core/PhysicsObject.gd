@@ -9,6 +9,7 @@ signal spawned
 signal despawned
 
 const FLAMMABLE_SCRIPT := preload("res://Scripts/Components/Flammable.gd")
+const BLEEDER_SCRIPT := preload("res://Scripts/Components/Bleeder.gd")
 
 ## Data-driven material — never hard-code friction/bounce/mass on objects.
 @export var object_material: ObjectMaterial:
@@ -26,6 +27,9 @@ func _ready() -> void:
 	# Needed so the Damage component can receive body_entered signals.
 	contact_monitor = true
 	max_contacts_reported = 8
+	# Continuous collision detection: without it, fast objects skip past
+	# thin platforms/walls in a single physics step and end up inside.
+	continuous_cd = RigidBody2D.CCD_MODE_CAST_SHAPE
 	_apply_material()
 	# Flammability is data-driven: a burnable material means this object
 	# can catch fire, with no per-scene setup (see Flammable component).
@@ -33,6 +37,11 @@ func _ready() -> void:
 		var flammable := FLAMMABLE_SCRIPT.new()
 		flammable.name = "Flammable"
 		add_child(flammable)
+	# Same data-driven pattern for blood: Flesh bleeds on hard impacts.
+	if object_material and object_material.bleeds and get_node_or_null(^"Bleeder") == null:
+		var bleeder := BLEEDER_SCRIPT.new()
+		bleeder.name = "Bleeder"
+		add_child(bleeder)
 	spawned.emit()
 
 func _apply_material() -> void:
@@ -52,8 +61,14 @@ func get_component(component_name: String) -> Node:
 func has_component(component_name: String) -> bool:
 	return get_component(component_name) != null
 
-## Every object must be removable (Development Rules).
+var _removed: bool = false
+
+## Every object must be removable (Development Rules). Idempotent:
+## bulk-clear may request removal several times in one frame.
 func remove() -> void:
+	if _removed:
+		return
+	_removed = true
 	despawned.emit()
 	queue_free()
 
