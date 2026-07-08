@@ -95,6 +95,10 @@ text = "Spring"
 unique_name_in_owner = true
 text = "Wheel"
 
+[node name="SpawnSteelButton" type="Button" parent="Panel/Margin/VBox/SpawnRow2"]
+unique_name_in_owner = true
+text = "Steel"
+
 [node name="SpawnRow3" type="HBoxContainer" parent="Panel/Margin/VBox"]
 theme_override_constants/separation = 6
 
@@ -110,6 +114,57 @@ text = "Car"
 unique_name_in_owner = true
 text = "Ember"
 
+[node name="SpawnBatteryButton" type="Button" parent="Panel/Margin/VBox/SpawnRow3"]
+unique_name_in_owner = true
+text = "Batt"
+
+[node name="MachineLabel" type="Label" parent="Panel/Margin/VBox"]
+text = "Machines"
+
+[node name="MachineRow1" type="HBoxContainer" parent="Panel/Margin/VBox"]
+theme_override_constants/separation = 6
+
+[node name="SpawnConveyorButton" type="Button" parent="Panel/Margin/VBox/MachineRow1"]
+unique_name_in_owner = true
+text = "Convey"
+
+[node name="SpawnSawButton" type="Button" parent="Panel/Margin/VBox/MachineRow1"]
+unique_name_in_owner = true
+text = "Saw"
+
+[node name="SpawnLauncherButton" type="Button" parent="Panel/Margin/VBox/MachineRow1"]
+unique_name_in_owner = true
+text = "Launch"
+
+[node name="MachineRow2" type="HBoxContainer" parent="Panel/Margin/VBox"]
+theme_override_constants/separation = 6
+
+[node name="SpawnFlamethrowerButton" type="Button" parent="Panel/Margin/VBox/MachineRow2"]
+unique_name_in_owner = true
+text = "Flame"
+
+[node name="SpawnCrusherButton" type="Button" parent="Panel/Margin/VBox/MachineRow2"]
+unique_name_in_owner = true
+text = "Crush"
+
+[node name="JointLabel" type="Label" parent="Panel/Margin/VBox"]
+text = "Joint Tool (click 2 objects)"
+
+[node name="JointRow" type="HBoxContainer" parent="Panel/Margin/VBox"]
+theme_override_constants/separation = 6
+
+[node name="JointPinButton" type="Button" parent="Panel/Margin/VBox/JointRow"]
+unique_name_in_owner = true
+text = "Pin"
+
+[node name="JointSpringButton" type="Button" parent="Panel/Margin/VBox/JointRow"]
+unique_name_in_owner = true
+text = "Spring"
+
+[node name="JointRopeButton" type="Button" parent="Panel/Margin/VBox/JointRow"]
+unique_name_in_owner = true
+text = "Rope"
+
 [node name="DragButton" type="Button" parent="Panel/Margin/VBox"]
 unique_name_in_owner = true
 text = "Drag Only"
@@ -119,6 +174,19 @@ unique_name_in_owner = true
 text = "Drag mode: click only grabs"
 
 [node name="Sep4" type="HSeparator" parent="Panel/Margin/VBox"]
+
+[node name="SaveRow" type="HBoxContainer" parent="Panel/Margin/VBox"]
+theme_override_constants/separation = 6
+
+[node name="SaveButton" type="Button" parent="Panel/Margin/VBox/SaveRow"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+text = "Save"
+
+[node name="LoadButton" type="Button" parent="Panel/Margin/VBox/SaveRow"]
+unique_name_in_owner = true
+size_flags_horizontal = 3
+text = "Load"
 
 [node name="ClearButton" type="Button" parent="Panel/Margin/VBox"]
 unique_name_in_owner = true

@@ -23,27 +23,36 @@ const SCENES := {
 	"Motor": preload("res://Scenes/Joints/Motor.tscn"),
 	"Car": preload("res://Scenes/Objects/Car.tscn"),
 	"Ember": preload("res://Scenes/Objects/Ember.tscn"),
+	"Steel": preload("res://Scenes/Objects/SteelBox.tscn"),
+	"Battery": preload("res://Scenes/Objects/Battery.tscn"),
+	"Conveyor": preload("res://Scenes/Objects/Conveyor.tscn"),
+	"Saw": preload("res://Scenes/Objects/SawBlade.tscn"),
+	"Launcher": preload("res://Scenes/Objects/SpringLauncher.tscn"),
+	"Flamethrower": preload("res://Scenes/Objects/Flamethrower.tscn"),
+	"Crusher": preload("res://Scenes/Objects/Crusher.tscn"),
 }
 
 ## Approximate clearance radius each object needs to spawn cleanly.
 const CLEARANCE := {
 	"Box": 34.0, "Ball": 28.0, "Beam": 95.0, "Ragdoll": 90.0,
 	"Rope": 20.0, "Spring": 30.0, "Wheel": 30.0, "Motor": 105.0,
-	"Car": 95.0, "Ember": 14.0,
+	"Car": 95.0, "Ember": 14.0, "Steel": 28.0, "Battery": 26.0,
+	"Conveyor": 110.0, "Saw": 45.0, "Launcher": 40.0, "Flamethrower": 40.0, "Crusher": 110.0,
 }
 
 ## Where quick-spawned objects drop from (a Marker2D in the world).
 @export var spawn_point: Node2D
 
 func _ready() -> void:
+	add_to_group("object_spawner")
 	GameManager.spawn_requested.connect(_on_spawn_requested)
 	GameManager.clear_requested.connect(clear_spawned)
 
 func _unhandled_input(event: InputEvent) -> void:
 	# Only reached if the Grabber didn't consume the click (see Grabber).
 	if event.is_action_pressed("primary_action"):
-		if GameManager.selected_type == "":
-			return  # Drag mode: missing a grab never spawns anything
+		if GameManager.tool_mode != "spawn":
+			return  # drag/joint modes never place objects
 		spawn(GameManager.selected_type, get_global_mouse_position())
 		get_viewport().set_input_as_handled()
 
@@ -80,6 +89,14 @@ func clear_spawned() -> void:
 			target.remove()
 		else:
 			target.queue_free()
+	for composite in get_tree().get_nodes_in_group("composites"):
+		if is_instance_valid(composite) and composite.has_method("remove"):
+			composite.remove()
+	# Player-made joints between environment pieces have no body whose
+	# removal would free them — sweep the whole joints group.
+	for joint in get_tree().get_nodes_in_group("joints"):
+		if is_instance_valid(joint):
+			joint.queue_free()
 	EffectsManager.clear_effects()
 
 ## Probe a circle at pos; if occupied, step upward looking for space.

@@ -13,6 +13,7 @@ config/features=PackedStringArray("4.3", "2D")
 
 GameManager="*res://Scripts/Core/GameManager.gd"
 EffectsManager="*res://Scripts/Effects/EffectsManager.gd"
+SaveManager="*res://Scripts/Save/SaveManager.gd"
 
 [display]
 

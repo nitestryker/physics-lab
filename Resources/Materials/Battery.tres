@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="ObjectMaterial" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Physics/ObjectMaterial.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+display_name = "Battery"
+color = Color(0.92, 0.76, 0.2, 1)
+density = 2.0
+friction = 0.5
+bounce = 0.05
+strength = 6.0
+bleeds = false
+burnable = false
+conductive = true

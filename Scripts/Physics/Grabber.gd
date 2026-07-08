@@ -63,7 +63,7 @@ func _release() -> void:
 	_grabbed = null
 
 func _try_remove(point: Vector2) -> bool:
-	var body := _body_at_point(point)
+	var body: PhysicsBody2D = _any_body_at_point(point)
 	if body == null:
 		return false
 	# If the body belongs to a composite object (e.g. a ragdoll limb),
@@ -77,6 +77,18 @@ func _try_remove(point: Vector2) -> bool:
 		target.remove()
 		return true
 	return false
+
+## Any physics body (machines have static parts) - used for removal.
+func _any_body_at_point(point: Vector2) -> PhysicsBody2D:
+	var params := PhysicsPointQueryParameters2D.new()
+	params.position = point
+	params.collide_with_bodies = true
+	params.collision_mask = 1
+	var hits := get_world_2d().direct_space_state.intersect_point(params, 8)
+	for hit in hits:
+		if hit.collider is PhysicsBody2D:
+			return hit.collider
+	return null
 
 func _body_at_point(point: Vector2) -> RigidBody2D:
 	var params := PhysicsPointQueryParameters2D.new()

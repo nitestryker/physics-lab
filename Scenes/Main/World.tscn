@@ -1,10 +1,12 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=15 format=3]
 
 [ext_resource type="Script" path="res://Scripts/Core/StaticShapeDrawer.gd" id="1"]
 [ext_resource type="Script" path="res://Scripts/Objects/ObjectSpawner.gd" id="2"]
 [ext_resource type="Script" path="res://Scripts/Physics/Grabber.gd" id="3"]
 [ext_resource type="Script" path="res://Scripts/Core/CameraController.gd" id="4"]
 [ext_resource type="PackedScene" path="res://Scenes/UI/DebugOverlay.tscn" id="5"]
+[ext_resource type="Script" path="res://Scripts/Physics/JointTool.gd" id="6"]
+[ext_resource type="Script" path="res://Scripts/Core/PowerNetwork.gd" id="7"]
 
 [sub_resource type="RectangleShape2D" id="ground"]
 size = Vector2(1500, 80)
@@ -104,6 +106,12 @@ spawn_point = NodePath("../SpawnPoint")
 
 [node name="Grabber" type="Node2D" parent="."]
 script = ExtResource("3")
+
+[node name="JointTool" type="Node2D" parent="."]
+script = ExtResource("6")
+
+[node name="PowerNetwork" type="Node" parent="."]
+script = ExtResource("7")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(640, 360)

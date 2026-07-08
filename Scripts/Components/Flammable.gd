@@ -55,6 +55,12 @@ func char_progress() -> float:
 		return 0.0
 	return clampf(_burn_elapsed / burn_out_time, 0.0, 1.0)
 
+## Restore a saved burn: ignite and fast-forward to the saved elapsed
+## time. The deterministic char recolors correctly on the next tick.
+func resume_burn(elapsed: float) -> void:
+	ignite()
+	_burn_elapsed = clampf(elapsed, 0.0, burn_out_time)
+
 func ignite() -> void:
 	if burning or _consumed:
 		return

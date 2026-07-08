@@ -29,12 +29,17 @@ and they go away.
 | Middle-mouse drag | Pan camera |
 | Scroll wheel | Zoom |
 | A / D or arrow keys | Drive any spawned Car |
+| Joint tool (Pin/Spring/Rope) | Click two objects to connect them at the clicked points |
 
 ## Developer Panel
 
 Top-left overlay: FPS, body/joint counts, gravity slider, pause,
 slow motion, and spawn-tool buttons: pick a type, then left-click in
-the world to place it. Drag Only disarms placing. Clear Spawned wipes
+the world to place it. Drag Only disarms placing. Save writes the world
+to user://physicslab_save.json; Load wipes and restores it (objects keep
+health, velocity, and burning progress; composites respawn fresh; player
+joints and rope-links persist, except ones tied to composite parts).
+Clear Spawned wipes
 every spawned object, ash pile, and blood stain — the environment stays. To see collision shapes while testing, use the
 editor's **Debug → Visible Collision Shapes** before running — Godot
 has no built-in runtime toggle for this.
@@ -82,3 +87,11 @@ Burnable: Wood (Box, Beam), Rubber (Ball, Wheel, car wheels, spring ball), Flesh
 - [ ] Throw a ragdoll hard at a wall — blood sprays from the limb that hits first
 - [ ] Slam a heavy box into a resting ragdoll — blood stains where it was struck
 - [ ] Watch a fresh stain on a wall: it splashes, runs downward, then dries dark
+- [ ] Touch a Battery to a Motor's blade — it spins; pull the battery away — it stops
+- [ ] Chain Steel boxes from a battery to the blade, then burn a wooden link out
+- [ ] Hold a severed limb against the running saw — it grinds into
+      blood flung tangentially, direction turning with the blade
+- [ ] Build the gauntlet: Conveyor into Saw into Launcher over a
+      Flamethrower, landing at a Crusher. Feed it a ragdoll.
+- [ ] Swing a beam edge-first into a ragdoll's arm at full speed (severs);
+      throw the ragdoll at a wall as hard as you can (never severs)

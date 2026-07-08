@@ -10,6 +10,8 @@ signal despawned
 
 const FLAMMABLE_SCRIPT := preload("res://Scripts/Components/Flammable.gd")
 const BLEEDER_SCRIPT := preload("res://Scripts/Components/Bleeder.gd")
+const SEVERABLE_SCRIPT := preload("res://Scripts/Components/Severable.gd")
+const CONDUCTIVE_SCRIPT := preload("res://Scripts/Components/Conductive.gd")
 
 ## Data-driven material — never hard-code friction/bounce/mass on objects.
 @export var object_material: ObjectMaterial:
@@ -37,11 +39,21 @@ func _ready() -> void:
 		var flammable := FLAMMABLE_SCRIPT.new()
 		flammable.name = "Flammable"
 		add_child(flammable)
-	# Same data-driven pattern for blood: Flesh bleeds on hard impacts.
+	# Same data-driven pattern for blood: Flesh bleeds on hard impacts...
 	if object_material and object_material.bleeds and get_node_or_null(^"Bleeder") == null:
 		var bleeder := BLEEDER_SCRIPT.new()
 		bleeder.name = "Bleeder"
 		add_child(bleeder)
+	# ...and flesh can be severed by blade-like or crushing impactors.
+	if object_material and object_material.bleeds and get_node_or_null(^"Severable") == null:
+		var severable := SEVERABLE_SCRIPT.new()
+		severable.name = "Severable"
+		add_child(severable)
+	# Conductive materials join the electricity network.
+	if object_material and object_material.conductive and get_node_or_null(^"Conductive") == null:
+		var conductive := CONDUCTIVE_SCRIPT.new()
+		conductive.name = "Conductive"
+		add_child(conductive)
 	spawned.emit()
 
 func _apply_material() -> void:
@@ -69,6 +81,14 @@ func remove() -> void:
 	if _removed:
 		return
 	_removed = true
+	# Free any joints referencing this body first (player-made joints,
+	# grabber joint) so nothing in the world points at a freed node.
+	if is_inside_tree():
+		for joint in get_tree().get_nodes_in_group("joints"):
+			if joint is Joint2D and is_instance_valid(joint):
+				if joint.get_node_or_null(joint.node_a) == self \
+						or joint.get_node_or_null(joint.node_b) == self:
+					joint.queue_free()
 	despawned.emit()
 	queue_free()
 

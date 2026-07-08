@@ -11,6 +11,7 @@ signal spawned
 signal despawned
 
 func _ready() -> void:
+	add_to_group("composites")
 	register_joints()
 	spawned.emit()
 

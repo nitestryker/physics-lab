@@ -34,10 +34,22 @@ func _ready() -> void:
 	%SpawnMotorButton.pressed.connect(_quick_spawn.bind("Motor"))
 	%SpawnCarButton.pressed.connect(_quick_spawn.bind("Car"))
 	%SpawnEmberButton.pressed.connect(_quick_spawn.bind("Ember"))
-	%DragButton.pressed.connect(func() -> void: GameManager.selected_type = "")
+	%SpawnSteelButton.pressed.connect(_quick_spawn.bind("Steel"))
+	%SpawnBatteryButton.pressed.connect(_quick_spawn.bind("Battery"))
+	%SpawnConveyorButton.pressed.connect(_quick_spawn.bind("Conveyor"))
+	%SpawnSawButton.pressed.connect(_quick_spawn.bind("Saw"))
+	%SpawnLauncherButton.pressed.connect(_quick_spawn.bind("Launcher"))
+	%SpawnFlamethrowerButton.pressed.connect(_quick_spawn.bind("Flamethrower"))
+	%SpawnCrusherButton.pressed.connect(_quick_spawn.bind("Crusher"))
+	%JointPinButton.pressed.connect(GameManager.set_joint.bind("Pin"))
+	%JointSpringButton.pressed.connect(GameManager.set_joint.bind("Spring"))
+	%JointRopeButton.pressed.connect(GameManager.set_joint.bind("Rope"))
+	%DragButton.pressed.connect(GameManager.set_drag)
 	%ClearButton.pressed.connect(GameManager.request_clear)
-	GameManager.selected_changed.connect(_on_selected_changed)
-	_on_selected_changed(GameManager.selected_type)
+	%SaveButton.pressed.connect(SaveManager.save_world)
+	%LoadButton.pressed.connect(SaveManager.load_world)
+	GameManager.tool_changed.connect(_on_tool_changed)
+	_on_tool_changed()
 
 func _process(_delta: float) -> void:
 	fps_label.text = "FPS: %d" % Engine.get_frames_per_second()
@@ -47,13 +59,16 @@ func _process(_delta: float) -> void:
 func _quick_spawn(type: String) -> void:
 	# Arms the click-to-place tool ONLY — nothing spawns until you
 	# left-click in the world. (Drag Only disarms it again.)
-	GameManager.selected_type = type
+	GameManager.set_spawn(type)
 
-func _on_selected_changed(type: String) -> void:
-	if type == "":
-		tool_label.text = "Drag mode: click only grabs"
-	else:
-		tool_label.text = "Click to place: %s" % type
+func _on_tool_changed() -> void:
+	match GameManager.tool_mode:
+		"drag":
+			tool_label.text = "Drag mode: click only grabs"
+		"spawn":
+			tool_label.text = "Click to place: %s" % GameManager.selected_type
+		"joint":
+			tool_label.text = "Joint (%s): click two objects" % GameManager.joint_type
 
 func _on_gravity_changed(value: float) -> void:
 	gravity_label.text = "Gravity: %d" % int(value)

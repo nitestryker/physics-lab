@@ -35,8 +35,13 @@ func _on_body_entered(other: Node) -> void:
 	var relative_speed: float = _pre_step_velocity.length()
 	var other_mass := 10.0  # static bodies (ground, walls) hit hard
 	if other is RigidBody2D:
-		relative_speed = (_pre_step_velocity - (other as RigidBody2D).linear_velocity).length()
-		other_mass = (other as RigidBody2D).mass
+		var rigid := other as RigidBody2D
+		# Include the impactor's rotational surface velocity so spinning
+		# blades and slamming machinery register their true speed.
+		var offset := _body.global_position - rigid.global_position
+		var point_velocity := rigid.linear_velocity + Vector2(-offset.y, offset.x) * rigid.angular_velocity
+		relative_speed = (_pre_step_velocity - point_velocity).length()
+		other_mass = rigid.mass
 	if relative_speed <= speed_threshold:
 		return
 	var amount := (relative_speed - speed_threshold) * damage_factor * other_mass
