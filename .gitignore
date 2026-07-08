@@ -1,0 +1,10 @@
+# Godot 4 cache and imported files
+.godot/
+*.translation
+
+# Never commit runtime saves (they live in user:// anyway)
+Saves/
+
+# OS junk
+.DS_Store
+Thumbs.db

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ObjectMaterial" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Physics/ObjectMaterial.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+display_name = "Steel"
+color = Color(0.62, 0.66, 0.72, 1)
+density = 3.0
+friction = 0.4
+bounce = 0.02
+strength = 8.0
+burnable = false
+conductive = true

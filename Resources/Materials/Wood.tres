@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="ObjectMaterial" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Physics/ObjectMaterial.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+display_name = "Wood"
+color = Color(0.72, 0.53, 0.31, 1)
+density = 0.8
+friction = 0.6
+bounce = 0.05
+strength = 1.0
+burnable = true
+conductive = false

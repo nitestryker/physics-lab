@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="PackedScene" path="res://Scenes/Base/PhysicsObject.tscn" id="1"]
+[ext_resource type="Resource" path="res://Resources/Materials/Flesh.tres" id="2"]
+[ext_resource type="Script" path="res://Scripts/Components/Grabbable.gd" id="3"]
+
+[sub_resource type="RectangleShape2D" id="shape"]
+size = Vector2(12, 48)
+
+[node name="Arm" instance=ExtResource("1")]
+object_material = ExtResource("2")
+base_mass = 0.5
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource("shape")
+
+[node name="Grabbable" type="Node" parent="." index="1"]
+script = ExtResource("3")

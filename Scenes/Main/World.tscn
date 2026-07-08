@@ -1,0 +1,112 @@
+[gd_scene load_steps=13 format=3 uid="uid://cnhgasp3nthqo"]
+
+[ext_resource type="Script" path="res://Scripts/Core/StaticShapeDrawer.gd" id="1"]
+[ext_resource type="Script" path="res://Scripts/Objects/ObjectSpawner.gd" id="2"]
+[ext_resource type="Script" path="res://Scripts/Physics/Grabber.gd" id="3"]
+[ext_resource type="Script" path="res://Scripts/Core/CameraController.gd" id="4"]
+[ext_resource type="PackedScene" path="res://Scenes/UI/DebugOverlay.tscn" id="5"]
+
+[sub_resource type="RectangleShape2D" id="ground"]
+size = Vector2(1500, 80)
+
+[sub_resource type="RectangleShape2D" id="wall"]
+size = Vector2(40, 900)
+
+[sub_resource type="RectangleShape2D" id="ramp"]
+size = Vector2(360, 24)
+
+[sub_resource type="RectangleShape2D" id="step1"]
+size = Vector2(180, 40)
+
+[sub_resource type="RectangleShape2D" id="step2"]
+size = Vector2(120, 40)
+
+[sub_resource type="RectangleShape2D" id="step3"]
+size = Vector2(60, 40)
+
+[sub_resource type="RectangleShape2D" id="platform"]
+size = Vector2(220, 24)
+
+[node name="World" type="Node2D"]
+
+[node name="Environment" type="Node2D" parent="."]
+
+[node name="Ground" type="StaticBody2D" parent="Environment"]
+position = Vector2(640, 680)
+script = ExtResource("1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Ground"]
+shape = SubResource("ground")
+
+[node name="WallLeft" type="StaticBody2D" parent="Environment"]
+position = Vector2(-90, 300)
+script = ExtResource("1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/WallLeft"]
+shape = SubResource("wall")
+
+[node name="WallRight" type="StaticBody2D" parent="Environment"]
+position = Vector2(1370, 300)
+script = ExtResource("1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/WallRight"]
+shape = SubResource("wall")
+
+[node name="Ramp" type="StaticBody2D" parent="Environment"]
+position = Vector2(1130, 560)
+rotation = -0.42
+script = ExtResource("1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Ramp"]
+shape = SubResource("ramp")
+
+[node name="Step1" type="StaticBody2D" parent="Environment"]
+position = Vector2(90, 620)
+script = ExtResource("1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Step1"]
+shape = SubResource("step1")
+
+[node name="Step2" type="StaticBody2D" parent="Environment"]
+position = Vector2(60, 580)
+script = ExtResource("1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Step2"]
+shape = SubResource("step2")
+
+[node name="Step3" type="StaticBody2D" parent="Environment"]
+position = Vector2(30, 540)
+script = ExtResource("1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/Step3"]
+shape = SubResource("step3")
+
+[node name="PlatformLeft" type="StaticBody2D" parent="Environment"]
+position = Vector2(320, 420)
+script = ExtResource("1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/PlatformLeft"]
+shape = SubResource("platform")
+
+[node name="PlatformRight" type="StaticBody2D" parent="Environment"]
+position = Vector2(660, 420)
+script = ExtResource("1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Environment/PlatformRight"]
+shape = SubResource("platform")
+
+[node name="SpawnPoint" type="Marker2D" parent="."]
+position = Vector2(640, 80)
+
+[node name="Spawner" type="Node2D" parent="." node_paths=PackedStringArray("spawn_point")]
+script = ExtResource("2")
+spawn_point = NodePath("../SpawnPoint")
+
+[node name="Grabber" type="Node2D" parent="."]
+script = ExtResource("3")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+script = ExtResource("4")
+
+[node name="DebugOverlay" parent="." instance=ExtResource("5")]

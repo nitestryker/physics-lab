@@ -1,0 +1,67 @@
+[gd_scene load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Characters/RagdollController.gd" id="1"]
+[ext_resource type="PackedScene" path="res://Scenes/Characters/Torso.tscn" id="2"]
+[ext_resource type="PackedScene" path="res://Scenes/Characters/Head.tscn" id="3"]
+[ext_resource type="PackedScene" path="res://Scenes/Characters/Arm.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://Scenes/Characters/Leg.tscn" id="5"]
+
+[node name="Ragdoll" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Torso" parent="." instance=ExtResource("2")]
+
+[node name="Head" parent="." instance=ExtResource("3")]
+position = Vector2(0, -48)
+
+[node name="ArmLeft" parent="." instance=ExtResource("4")]
+position = Vector2(-20, 2)
+
+[node name="ArmRight" parent="." instance=ExtResource("4")]
+position = Vector2(20, 2)
+
+[node name="LegLeft" parent="." instance=ExtResource("5")]
+position = Vector2(-10, 56)
+
+[node name="LegRight" parent="." instance=ExtResource("5")]
+position = Vector2(10, 56)
+
+[node name="NeckJoint" type="PinJoint2D" parent="."]
+position = Vector2(0, -31)
+node_a = NodePath("../Torso")
+node_b = NodePath("../Head")
+angular_limit_enabled = true
+angular_limit_lower = -0.7854
+angular_limit_upper = 0.7854
+
+[node name="ShoulderLeft" type="PinJoint2D" parent="."]
+position = Vector2(-20, -22)
+node_a = NodePath("../Torso")
+node_b = NodePath("../ArmLeft")
+angular_limit_enabled = true
+angular_limit_lower = -1.0472
+angular_limit_upper = 1.0472
+
+[node name="ShoulderRight" type="PinJoint2D" parent="."]
+position = Vector2(20, -22)
+node_a = NodePath("../Torso")
+node_b = NodePath("../ArmRight")
+angular_limit_enabled = true
+angular_limit_lower = -1.0472
+angular_limit_upper = 1.0472
+
+[node name="HipLeft" type="PinJoint2D" parent="."]
+position = Vector2(-10, 31)
+node_a = NodePath("../Torso")
+node_b = NodePath("../LegLeft")
+angular_limit_enabled = true
+angular_limit_lower = -1.0472
+angular_limit_upper = 1.0472
+
+[node name="HipRight" type="PinJoint2D" parent="."]
+position = Vector2(10, 31)
+node_a = NodePath("../Torso")
+node_b = NodePath("../LegRight")
+angular_limit_enabled = true
+angular_limit_lower = -1.0472
+angular_limit_upper = 1.0472
