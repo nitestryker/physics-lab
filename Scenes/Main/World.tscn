@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://cnhgasp3nthqo"]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://Scripts/Core/StaticShapeDrawer.gd" id="1"]
 [ext_resource type="Script" path="res://Scripts/Objects/ObjectSpawner.gd" id="2"]

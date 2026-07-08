@@ -14,6 +14,9 @@ const SCENES := {
 	"Ragdoll": preload("res://Scenes/Characters/Ragdoll.tscn"),
 	"Rope": preload("res://Scenes/Joints/Rope.tscn"),
 	"Spring": preload("res://Scenes/Joints/Spring.tscn"),
+	"Wheel": preload("res://Scenes/Objects/Wheel.tscn"),
+	"Motor": preload("res://Scenes/Joints/Motor.tscn"),
+	"Car": preload("res://Scenes/Objects/Car.tscn"),
 }
 
 ## Where quick-spawned objects drop from (a Marker2D in the world).

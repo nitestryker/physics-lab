@@ -25,6 +25,7 @@ and they go away.
 | Right-click on object | Remove it |
 | Middle-mouse drag | Pan camera |
 | Scroll wheel | Zoom |
+| A / D or arrow keys | Drive any spawned Car |
 
 ## Developer Panel
 
@@ -65,3 +66,5 @@ has no built-in runtime toggle for this.
 - [ ] Spawn a ragdoll, grab it by one arm, and swing it around
 - [ ] Hang a rope from a platform edge and throw a ragdoll at it
 - [ ] Grab a spring's ball, pull it down, and release
+- [ ] Spawn a Car, drive it up the ramp with A/D
+- [ ] Spawn a Motor next to a box stack and watch the blade clear it

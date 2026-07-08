@@ -1,0 +1,32 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://Scripts/Physics/MotorSpinner.gd" id="1"]
+[ext_resource type="Script" path="res://Scripts/Core/StaticShapeDrawer.gd" id="2"]
+[ext_resource type="PackedScene" path="res://Scenes/Base/PhysicsObject.tscn" id="3"]
+[ext_resource type="Resource" path="res://Resources/Materials/Steel.tres" id="4"]
+
+[sub_resource type="RectangleShape2D" id="mount"]
+size = Vector2(24, 24)
+
+[sub_resource type="RectangleShape2D" id="blade"]
+size = Vector2(200, 16)
+
+[node name="Motor" type="Node2D"]
+script = ExtResource("1")
+
+[node name="Anchor" type="StaticBody2D" parent="."]
+script = ExtResource("2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Anchor"]
+shape = SubResource("mount")
+
+[node name="Blade" parent="." instance=ExtResource("3")]
+object_material = ExtResource("4")
+base_mass = 2.0
+
+[node name="CollisionShape2D" parent="Blade" index="0"]
+shape = SubResource("blade")
+
+[node name="Joint" type="PinJoint2D" parent="."]
+node_a = NodePath("../Anchor")
+node_b = NodePath("../Blade")
